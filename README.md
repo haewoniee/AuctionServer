@@ -37,12 +37,12 @@
 
     AuctionServer.java
 
-        **private Object instanceLock = new Object();**
+        private Object instanceLock = new Object();
         
         ..
         public int submitItem(String sellerName, String itemName, int lowestBiddingPrice, int biddingDurationMs)
         	{
-        	**synchronized (instanceLock) {**
+        	synchronized (instanceLock) {
 
 - [ServerPrinter.java](http://serverprinter.java)
     - ServerPrinter의 각 함수는 AuctionServer을 상속한 뒤, super로 AuctionServer의 메소드를 수행한 후 Logger을 사용하여 logging함.
@@ -52,7 +52,7 @@
             {
                 Logger.getInstance().logStart("soldItemsCount");
                 
-                **int returnValue = super.soldItemsCount(); //AuctionServer실행**
+                int returnValue = super.soldItemsCount(); //AuctionServer실행
         
                 Logger.getInstance().logEnd("soldItemsCount", returnValue);
                 
@@ -62,7 +62,7 @@
 - Logger.java
     - System.out을 instance lock으로 사용하여 thread-safe 유지.
 
-        **private PrintStream outStream = System.out;**
+        private PrintStream outStream = System.out;
             
         public void setOutput(PrintStream outStream)
         {
@@ -73,7 +73,7 @@
         
         public void logStart(String method, Object... args)
         {
-            **synchronized (this.outStream)**
+            synchronized (this.outStream)
             {
         			...
         			this.outStream.format("S [%s] %s(%s)\n", formatter.format(now), method, argStr);
