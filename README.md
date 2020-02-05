@@ -43,40 +43,41 @@
         public int submitItem(String sellerName, String itemName, int lowestBiddingPrice, int biddingDurationMs)
         	{
         	synchronized (instanceLock) {
+            ..
 
 - [ServerPrinter.java](http://serverprinter.java)
     - ServerPrinter의 각 함수는 AuctionServer을 상속한 뒤, super로 AuctionServer의 메소드를 수행한 후 Logger을 사용하여 logging함.
 
-        @Override
-            public int soldItemsCount()
-            {
-                Logger.getInstance().logStart("soldItemsCount");
-                
-                int returnValue = super.soldItemsCount(); //AuctionServer실행
-        
-                Logger.getInstance().logEnd("soldItemsCount", returnValue);
-                
-                return returnValue;
-            }
+            @Override
+                public int soldItemsCount()
+                {
+                    Logger.getInstance().logStart("soldItemsCount");
+
+                    int returnValue = super.soldItemsCount(); //AuctionServer실행
+
+                    Logger.getInstance().logEnd("soldItemsCount", returnValue);
+
+                    return returnValue;
+                }
 
 - Logger.java
     - System.out을 instance lock으로 사용하여 thread-safe 유지.
 
-        private PrintStream outStream = System.out;
-            
-        public void setOutput(PrintStream outStream)
-        {
-            this.outStream = outStream;
-        }
-        
-        ...
-        
-        public void logStart(String method, Object... args)
-        {
-            synchronized (this.outStream)
+            private PrintStream outStream = System.out;
+
+            public void setOutput(PrintStream outStream)
             {
-        			...
-        			this.outStream.format("S [%s] %s(%s)\n", formatter.format(now), method, argStr);
-              this.outStream.flush();
-        		}
-        }
+                this.outStream = outStream;
+            }
+
+            ...
+
+            public void logStart(String method, Object... args)
+            {
+                synchronized (this.outStream)
+                {
+                        ...
+                        this.outStream.format("S [%s] %s(%s)\n", formatter.format(now), method, argStr);
+                  this.outStream.flush();
+                    }
+            }
