@@ -45,7 +45,7 @@
         	synchronized (instanceLock) {
             ..
 
-- [ServerPrinter.java](http://serverprinter.java)
+- ServerPrinter.java
     - ServerPrinter의 각 함수는 AuctionServer을 상속한 뒤, super로 AuctionServer의 메소드를 수행한 후 Logger을 사용하여 logging함.
 
             @Override
